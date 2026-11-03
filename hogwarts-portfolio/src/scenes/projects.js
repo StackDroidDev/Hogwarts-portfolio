@@ -335,7 +335,7 @@ export class ProjectsScene {
     el.innerHTML = `
       <div class="projects-gallery-header">
         <h2 class="gallery-title">The Portrait Gallery</h2>
-        <p class="gallery-subtitle">Living Canvases & Interactive Software</p>
+        <p class="gallery-subtitle">Click portraits to Inspect</p>
       </div>
 
       <!-- Active Project Modal Card -->
