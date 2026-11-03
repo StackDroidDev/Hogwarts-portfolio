@@ -1,0 +1,272 @@
+/* ============================================================
+   main.css — Global styles, loading screen, UI overlay, cursor
+   ============================================================ */
+
+/* ---------- Reset & base ---------- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --midnight: #070b1a;
+  --gold: #e8b04a;
+  --cream: #f3e9d2;
+  --font-title: 'Cinzel', serif;
+  --font-body: 'Lora', serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--midnight);
+  color: var(--cream);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Canvas ---------- */
+#canvas-container {
+  position: fixed; inset: 0;
+  z-index: 0;
+}
+#canvas-container canvas {
+  display: block; width: 100%; height: 100%;
+}
+
+/* ---------- UI overlay ---------- */
+#ui-overlay {
+  position: fixed; inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+#ui-overlay > * {
+  pointer-events: auto;
+}
+
+/* ---------- Wand cursor (desktop) ---------- */
+#cursor-dot, #cursor-glow {
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+#cursor-dot {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  box-shadow: 0 0 6px 2px var(--gold), 0 0 20px 6px rgba(232,176,74,0.4);
+}
+#cursor-glow {
+  width: 40px; height: 40px;
+  background: radial-gradient(circle, rgba(232,176,74,0.18) 0%, transparent 70%);
+}
+
+#spark-canvas {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9998;
+}
+
+@media (pointer: coarse) {
+  #cursor-dot, #cursor-glow, #spark-canvas { display: none !important; }
+}
+
+/* ---------- Loading screen ---------- */
+#loading-screen {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: var(--midnight);
+  transition: opacity 0.8s ease;
+}
+#loading-screen.hidden {
+  opacity: 0; pointer-events: none;
+}
+
+#loading-screen h1 {
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25em;
+  text-shadow: 0 0 20px rgba(232,176,74,0.5);
+}
+
+#loading-screen .subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  color: var(--cream);
+  opacity: 0.7;
+  margin-bottom: 2em;
+}
+
+/* Progress bar */
+.progress-wrap {
+  width: min(320px, 80vw);
+  height: 4px;
+  background: rgba(232,176,74,0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 0.6em;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold), #f5d98a);
+  border-radius: 2px;
+  transition: width 0.15s ease;
+}
+.progress-text {
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  color: var(--gold);
+  opacity: 0.8;
+  margin-bottom: 2em;
+}
+
+/* Enter buttons */
+.enter-buttons {
+  display: none;          /* shown after progress hits 100 */
+  flex-direction: column;
+  gap: 0.75em;
+  align-items: center;
+}
+.enter-buttons.visible {
+  display: flex;
+}
+
+.btn-magic {
+  font-family: var(--font-title);
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  padding: 0.7em 2.2em;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+.btn-magic:hover, .btn-magic:focus-visible {
+  background: var(--gold);
+  color: var(--midnight);
+  box-shadow: 0 0 24px rgba(232,176,74,0.45);
+  outline: none;
+}
+.btn-magic.primary {
+  background: var(--gold);
+  color: var(--midnight);
+}
+.btn-magic.primary:hover {
+  box-shadow: 0 0 30px rgba(232,176,74,0.6);
+}
+
+.btn-skip {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--cream);
+  opacity: 0.45;
+  background: none; border: none;
+  cursor: pointer;
+  margin-top: 0.5em;
+  transition: opacity 0.3s;
+}
+.btn-skip:hover { opacity: 0.8; }
+
+/* ---------- Name reveal overlay ---------- */
+#name-reveal-overlay {
+  position: fixed; inset: 0; z-index: 20;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  padding-bottom: 8vh;
+  pointer-events: none;
+  opacity: 0;
+}
+#name-reveal-overlay.active {
+  opacity: 1;
+}
+
+.reveal-controls {
+  display: flex; gap: 1em;
+  pointer-events: auto;
+  margin-bottom: 1em;
+}
+
+.role-text {
+  font-family: var(--font-title);
+  font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  opacity: 0;
+  text-shadow: 0 0 12px rgba(232,176,74,0.5);
+}
+
+.scroll-hint {
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+  color: var(--cream);
+  opacity: 0;
+  margin-top: 1.5em;
+  animation: hintBob 2s ease-in-out infinite;
+}
+@keyframes hintBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ---------- Sound controls ---------- */
+.sound-controls {
+  position: fixed;
+  bottom: 1.5rem; right: 1.5rem;
+  z-index: 50;
+  display: flex; align-items: center; gap: 0.6em;
+}
+.sound-toggle {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(232,176,74,0.3);
+  background: rgba(7,11,26,0.7);
+  color: var(--gold);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.3s, background 0.3s;
+  backdrop-filter: blur(6px);
+}
+.sound-toggle:hover {
+  border-color: var(--gold);
+  background: rgba(232,176,74,0.12);
+}
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 72px; height: 3px;
+  background: rgba(232,176,74,0.25);
+  border-radius: 2px;
+  outline: none;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.sound-controls:hover .volume-slider,
+.sound-controls:focus-within .volume-slider {
+  opacity: 1; pointer-events: auto;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+}
+.volume-slider::-moz-range-thumb {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: none;
+  cursor: pointer;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

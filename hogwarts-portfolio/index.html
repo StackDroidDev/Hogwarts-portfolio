@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joel Biju | Wizarding Odyssey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Cinzel+Decorative:wght@700&family=Lora:ital,wght@0,400;0,600;1,400&family=Marcellus&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <!-- 3D Canvas Mount -->
+  <div id="webgl-container"></div>
+
+  <!-- Glowing Wand Cursor (Desktop Only) -->
+  <div id="wand-cursor" class="wand-cursor">
+    <div class="wand-core"></div>
+    <div class="wand-flare"></div>
+  </div>
+
+  <!-- Loading Screen (Platform 9¾) -->
+  <div id="loader" class="loader-overlay" role="progressbar" aria-live="polite">
+    <div class="loader-content">
+      <div class="platform-badge" aria-hidden="true">
+        <span class="platform-number">9¾</span>
+      </div>
+
+      <h1 class="loader-heading">Platform 9¾ • The Journey Begins</h1>
+      <p class="loader-subphrase">The Hogwarts Express awaits on Track 9</p>
+
+      <div class="loader-track-container">
+        <div class="loader-track-rail">
+          <div id="progress-bar" class="loader-track-fill"></div>
+        </div>
+        <span id="progress-text" class="loader-percent" aria-live="polite">0%</span>
+      </div>
+
+      <div id="loader-actions" class="loader-actions hidden">
+        <button id="btn-enter" class="loader-primary-btn">
+          <span>ENTER PLATFORM</span>
+        </button>
+        <button id="btn-skip-loader" class="loader-skip-btn">
+          Skip Departure
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fixed Top Polish & Navigation Header -->
+  <header id="global-polish-bar">
+    <div class="top-nav-left">
+      <button id="btn-open-rooms-menu" class="nav-pill-btn" aria-label="Open Rooms Navigator">
+        <span>🏰</span>
+        <span>ROOMS</span>
+      </button>
+      <button id="btn-toggle-motion" class="nav-pill-btn" aria-label="Toggle Reduced Motion">
+        <span id="motion-icon">🌀</span>
+        <span id="motion-text">MOTION</span>
+      </button>
+    </div>
+
+    <div class="top-nav-right">
+      <button id="btn-replay" class="nav-pill-btn">REPLAY</button>
+      <button id="btn-skip-intro" class="nav-pill-btn">SKIP INTRO</button>
+    </div>
+  </header>
+
+  <!-- Global Scroll Progress Line -->
+  <div id="global-scroll-progress-bar"></div>
+
+  <!-- Single Canonical Room 0 Title & Scroll Prompt -->
+  <div id="hero-text-overlay" class="hero-name-ui">
+    <h2 id="role-subtitle" class="hero-tagline-sub">APP DEVELOPER • PHOTOGRAPHER</h2>
+    <div id="scroll-hint" class="scroll-cue-prompt">
+      <span class="hint-text">Scroll to meet the Sorting Hat</span>
+      <div class="hint-chevron">▾</div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
